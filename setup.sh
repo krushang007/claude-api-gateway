@@ -241,3 +241,4 @@ echo -e "  Tip: If your IDE is already open, reload it via Command Palette:"
 echo -e "       'Developer: Reload Window'"
 echo -e "${GREEN}================================================================${NC}"
 echo ""
+

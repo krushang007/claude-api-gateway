@@ -179,7 +179,7 @@ export function calculateCost(usage = {}, modelId = "") {
 
   const inputCost = (uncachedInput / 1_000_000) * pricing.inputPerM;
   const cacheReadCost = (cacheRead / 1_000_000) * pricing.cacheReadPerM;
-  const cacheWriteCost = cacheWrite5m > 0
+  const cacheWriteCost = (cacheWrite5m > 0 || cacheWrite1h > 0)
     ? ((cacheWrite5m / 1_000_000) * pricing.cacheWrite5mPerM) + ((cacheWrite1h / 1_000_000) * pricing.cacheWrite1hPerM)
     : (totalCacheWrite / 1_000_000) * pricing.cacheWrite5mPerM;
   const outputCost = (outputTokens / 1_000_000) * pricing.outputPerM;

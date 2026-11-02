@@ -6,6 +6,30 @@ import { logRequest, getStats } from "./db.mjs";
 
 const PORT = Number(process.env.PORT || 8765);
 const DEFAULT_API_KEY = process.env.ANTHROPIC_API_KEY || "";
+const CACHE_TTL = process.env.CACHE_TTL || "1h";
+
+function upgradeCacheControl(obj, ttl = "1h") {
+  if (!obj || typeof obj !== "object") return 0;
+  let count = 0;
+  if (Array.isArray(obj)) {
+    for (const item of obj) {
+      count += upgradeCacheControl(item, ttl);
+    }
+    return count;
+  }
+  if (obj.cache_control && typeof obj.cache_control === "object") {
+    if (obj.cache_control.type === "ephemeral") {
+      obj.cache_control.ttl = ttl;
+      count++;
+    }
+  }
+  for (const val of Object.values(obj)) {
+    if (val && typeof val === "object") {
+      count += upgradeCacheControl(val, ttl);
+    }
+  }
+  return count;
+}
 
 function parseSSELine(line, usage, modelHolder) {
   const trimmed = line.trim();
@@ -92,6 +116,13 @@ const server = http.createServer(async (req, res) => {
       try {
         const parsed = JSON.parse(requestBody.toString("utf8"));
         if (parsed.model) requestedModel = parsed.model;
+        if (CACHE_TTL && CACHE_TTL !== "5m") {
+          const upgraded = upgradeCacheControl(parsed, CACHE_TTL);
+          if (upgraded > 0) {
+            requestBody = Buffer.from(JSON.stringify(parsed), "utf8");
+            headers["content-length"] = String(requestBody.length);
+          }
+        }
       } catch {
         // ignore parse error
       }

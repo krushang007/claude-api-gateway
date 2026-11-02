@@ -18,3 +18,4 @@ services:
       - PORT=${PORT:-8765}
       - DATA_DIR=/app/data
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      - CACHE_TTL=${CACHE_TTL:-1h}
