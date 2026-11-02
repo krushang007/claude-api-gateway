@@ -1,0 +1,20 @@
+services:
+  claude-gateway:
+    build: .
+    container_name: claude-api-gateway
+    restart: unless-stopped
+    ports:
+      - "8765:8765"
+    volumes:
+      - ./data:/app/data
+      - ./dashboard.html:/app/dashboard.html
+      - ./server.mjs:/app/server.mjs
+      - ./pricing.mjs:/app/pricing.mjs
+      - ./db.mjs:/app/db.mjs
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      - PORT=${PORT:-8765}
+      - DATA_DIR=/app/data
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}

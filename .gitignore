@@ -1,0 +1,12 @@
+# Local environment secrets
+.env
+.env.local
+.env.*.local
+
+# Runtime logs & SQLite/JSONL usage database
+data/
+*.log
+
+# Dependencies & caches
+node_modules/
+.DS_Store

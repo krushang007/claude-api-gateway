@@ -1,0 +1,11 @@
+{
+  "name": "anthropic-api-gateway",
+  "version": "1.0.0",
+  "description": "Dockerized Anthropic API Gateway with Prompt Caching & Cost Analytics Dashboard",
+  "type": "module",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node server.mjs"
+  }
+}
+
