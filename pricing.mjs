@@ -49,15 +49,15 @@ export const PRICING_TIERS = {
     cacheReadPerM: 1.50
   },
 
-  // Claude Sonnet 5.5 & Sonnet 5 (Tier 5_25)
+  // Claude Sonnet 5.5 (Official Anthropic rates: $2.00 / $10.00)
   "claude-sonnet-5-5": {
     name: "Claude Sonnet 5.5",
     family: "sonnet",
-    inputPerM: 5.0,
-    outputPerM: 25.0,
-    cacheWrite5mPerM: 6.25,
-    cacheWrite1hPerM: 10.0,
-    cacheReadPerM: 0.50
+    inputPerM: 2.0,
+    outputPerM: 10.0,
+    cacheWrite5mPerM: 2.50,
+    cacheWrite1hPerM: 4.00,
+    cacheReadPerM: 0.10
   },
   "claude-sonnet-5": {
     name: "Claude Sonnet 5",
